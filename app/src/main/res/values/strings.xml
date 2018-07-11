@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Let TV</string>
+    <string name="title_activity_tvshow_details">TVShowDetails</string>
+    <string name="air_date">Published Date</string>
+    <string name="vote_average">Vote Average</string>
+    <string name="vote_count">Vote Count</string>
+    <string name="overview">Overview</string>
+</resources>
