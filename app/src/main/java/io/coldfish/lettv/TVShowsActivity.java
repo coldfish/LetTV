@@ -28,10 +28,13 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tvshows);
 
-        final VMTVShows vmTVShows = ViewModelProviders.of(this).get(VMTVShows.class);
-        vmTVShows.callServiceForTVShows();
-
         final RecyclerView tvShowListView = findViewById(R.id.tv_shows_list);
+        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.pull_down_to_refresh);
+        
+        final VMTVShows vmTVShows = ViewModelProviders.of(this).get(VMTVShows.class);
+        swipeRefreshLayout.setRefreshing(true);
+        vmTVShows.callServiceForTVShows();
+        
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         tvShowListView.setLayoutManager(layoutManager);
         tvShowListView.addItemDecoration(new VerticalSpaceItemDecoration(10));
@@ -51,16 +54,15 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
                     tvShowListView.setAdapter(adapter);
                     adapter.setClickListener(TVShowsActivity.this);
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
-
-        final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.pull_down_to_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 vmTVShows.clearAndCallServiceForTVShows();
-                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(true);
             }
         });
 
