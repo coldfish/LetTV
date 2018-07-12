@@ -46,9 +46,11 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
             @Override
             public void onChanged(@Nullable List<TVShow> tvShows) {
                 tvShowList = tvShows;
-                TVShowsAdapter adapter = new TVShowsAdapter(tvShows);
-                tvShowListView.setAdapter(adapter);
-                adapter.setClickListener(TVShowsActivity.this);
+                if (!isDestroyed()) {
+                    TVShowsAdapter adapter = new TVShowsAdapter(tvShows);
+                    tvShowListView.setAdapter(adapter);
+                    adapter.setClickListener(TVShowsActivity.this);
+                }
             }
         });
 

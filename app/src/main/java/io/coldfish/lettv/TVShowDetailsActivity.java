@@ -11,6 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.github.florent37.tutoshowcase.TutoShowcase;
+
 import java.util.List;
 
 import io.coldfish.lettv.model.TVShow;
@@ -27,6 +29,15 @@ public class TVShowDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tvshow_detail);
 
+        TutoShowcase.from(this)
+                .setContentView(R.layout.tutor_swipe)
+                .setFitsSystemWindows(true)
+                .on(R.id.view_pager)
+                .displaySwipableRight()
+                .delayed(1000)
+                .animated(true)
+                .showOnce("tutor_swipe");
+
         TVShow tv_show = getIntent().getExtras().getParcelable("tv_show");
 
         final VMTVShows vmTVShows = ViewModelProviders.of(this).get(VMTVShows.class);
@@ -36,10 +47,12 @@ public class TVShowDetailsActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<TVShow> tvShows) {
                 similarTVShows = tvShows;
-                screenSlidePagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-                mViewPager = findViewById(R.id.view_pager);
-                mViewPager.setAdapter(screenSlidePagerAdapter);
-                mViewPager.setPageTransformer(true, new DepthPageTransformer());
+                if (!isDestroyed()) {
+                    screenSlidePagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+                    mViewPager = findViewById(R.id.view_pager);
+                    mViewPager.setAdapter(screenSlidePagerAdapter);
+                    mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+                }
             }
         });
     }
@@ -94,6 +107,8 @@ public class TVShowDetailsActivity extends AppCompatActivity {
         }
     }
 
+    // Different animation for pager transition
+    // mViewPager.setPageTransformer(true, new DepthPageTransformer());
     public class DepthPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.75f;
 

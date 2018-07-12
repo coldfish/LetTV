@@ -46,11 +46,17 @@ public class ScreenSlideFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tvshow_detail, container, false);
+        
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
-        toolbar.setTitle(tvShow.getOriginal_name());
-
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+        toolbar.setTitle(tvShow.getOriginal_name());
 
         // Hero Image
         ImageView imageView = rootView.findViewById(R.id.header_image);

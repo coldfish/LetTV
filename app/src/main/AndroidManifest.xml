@@ -20,7 +20,6 @@
         </activity>
         <activity
             android:name=".TVShowDetailsActivity"
-            android:label="@string/title_activity_tvshow_details"
             android:parentActivityName=".TVShowsActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
