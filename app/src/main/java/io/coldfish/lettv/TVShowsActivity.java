@@ -74,5 +74,6 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
         Intent intent = new Intent(this, TVShowDetailsActivity.class);
         intent.putExtra("tv_show", tvshow);
         startActivity(intent);
+        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_right);
     }
 }
