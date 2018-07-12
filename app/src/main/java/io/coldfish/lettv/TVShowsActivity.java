@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -30,11 +31,12 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
 
         final RecyclerView tvShowListView = findViewById(R.id.tv_shows_list);
         final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.pull_down_to_refresh);
-        
+        final LinearLayout noData = findViewById(R.id.noData);
+
         final VMTVShows vmTVShows = ViewModelProviders.of(this).get(VMTVShows.class);
         swipeRefreshLayout.setRefreshing(true);
         vmTVShows.callServiceForTVShows();
-        
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         tvShowListView.setLayoutManager(layoutManager);
         tvShowListView.addItemDecoration(new VerticalSpaceItemDecoration(10));
@@ -49,10 +51,15 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
             @Override
             public void onChanged(@Nullable List<TVShow> tvShows) {
                 tvShowList = tvShows;
-                if (!isDestroyed()) {
-                    TVShowsAdapter adapter = new TVShowsAdapter(tvShows);
-                    tvShowListView.setAdapter(adapter);
-                    adapter.setClickListener(TVShowsActivity.this);
+                if (tvShowList != null && tvShowList.size() > 0) {
+                    noData.setVisibility(View.GONE);
+                    if (!isDestroyed()) {
+                        TVShowsAdapter adapter = new TVShowsAdapter(tvShows);
+                        tvShowListView.setAdapter(adapter);
+                        adapter.setClickListener(TVShowsActivity.this);
+                    }
+                } else {
+                    noData.setVisibility(View.VISIBLE);
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }

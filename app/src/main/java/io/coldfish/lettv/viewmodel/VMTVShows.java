@@ -32,7 +32,7 @@ public class VMTVShows extends ViewModel {
 
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
-
+                popularShowsData.setValue(null);
             }
         });
     }
@@ -51,8 +51,8 @@ public class VMTVShows extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable t) {
-
+            public void onFailure(Call<Response> call, Throwable t) { 
+                similarShowsData.setValue(null);
             }
         });
     }
