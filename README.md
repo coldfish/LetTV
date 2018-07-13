@@ -16,6 +16,6 @@ https://api.themoviedb.org/3/tv/{tv_show_id}/similar
 
 # Screenshots
 
-![TV Shows List Page](https://raw.github.com/colfish/LetTV/master/screenshots/tv_shows_list.png)
+![TV Shows List Page](screenshots/tv_shows_list.png)
 
-![TV Show Detail Page](https://raw.github.com/colfish/LetTV/master/screenshots/tv_show_detail.png)
+![TV Show Detail Page](screenshots/tv_show_detail.png)
