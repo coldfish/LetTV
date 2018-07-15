@@ -31,6 +31,22 @@ public class TVShow implements Parcelable {
     private String[] origin_country;
     private int[] genre_ids;
 
+    public TVShow(int id, String name, String original_name, String overview, String first_air_date, String poster_path, String backdrop_path, double popularity, double vote_average, int vote_count, String original_language, String[] origin_country, int[] genre_ids) {
+        this.id = id;
+        this.name = name;
+        this.original_name = original_name;
+        this.overview = overview;
+        this.first_air_date = first_air_date;
+        this.poster_path = poster_path;
+        this.backdrop_path = backdrop_path;
+        this.popularity = popularity;
+        this.vote_average = vote_average;
+        this.vote_count = vote_count;
+        this.original_language = original_language;
+        this.origin_country = origin_country;
+        this.genre_ids = genre_ids;
+    }
+
     protected TVShow(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();

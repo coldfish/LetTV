@@ -12,10 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.coldfish.lettv.adapter.TVShowsAdapter;
 import io.coldfish.lettv.model.TVShow;
+import io.coldfish.lettv.rest.RestClient;
+import io.coldfish.lettv.rest.TVShowsRepository;
 import io.coldfish.lettv.utils.LoadMoreListener;
 import io.coldfish.lettv.utils.VerticalSpaceItemDecoration;
 import io.coldfish.lettv.viewmodel.VMTVShows;
@@ -33,10 +36,14 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
         final SwipeRefreshLayout swipeRefreshLayout = findViewById(R.id.pull_down_to_refresh);
         final LinearLayout noData = findViewById(R.id.noData);
 
-        final VMTVShows vmTVShows = ViewModelProviders.of(this).get(VMTVShows.class);
+        VMTVShows.Factory factory = new VMTVShows.Factory(new TVShowsRepository(RestClient.get()));
+        final VMTVShows vmTVShows = ViewModelProviders.of(this, factory).get(VMTVShows.class);
         swipeRefreshLayout.setRefreshing(true);
         vmTVShows.callServiceForTVShows();
 
+        final TVShowsAdapter adapter = new TVShowsAdapter(new ArrayList<TVShow>(0));
+        adapter.setClickListener(this);
+        tvShowListView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         tvShowListView.setLayoutManager(layoutManager);
         tvShowListView.addItemDecoration(new VerticalSpaceItemDecoration(10));
@@ -54,9 +61,7 @@ public class TVShowsActivity extends AppCompatActivity implements TVShowsAdapter
                 if (tvShowList != null && tvShowList.size() > 0) {
                     noData.setVisibility(View.GONE);
                     if (!isDestroyed()) {
-                        TVShowsAdapter adapter = new TVShowsAdapter(tvShows);
-                        tvShowListView.setAdapter(adapter);
-                        adapter.setClickListener(TVShowsActivity.this);
+                        adapter.setItems(tvShows);
                     }
                 } else {
                     noData.setVisibility(View.VISIBLE);

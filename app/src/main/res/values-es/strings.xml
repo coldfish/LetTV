@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Let TV</string>
+    <string name="air_date">Fecha de Publicación</string>
+    <string name="vote_average">Voto Promedio</string>
+    <string name="vote_count">Conteo de Votos</string>
+    <string name="overview">Visión de Conjunto</string>
+    <string name="swipe_tutorial">Puede deslizar de izquierda a derecha para mostrar programas de TV similares</string>
+    <string name="list_is_empty">No hay programas de televisión disponibles</string>
+</resources>

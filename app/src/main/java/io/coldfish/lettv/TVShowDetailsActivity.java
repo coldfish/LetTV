@@ -16,6 +16,8 @@ import com.github.florent37.tutoshowcase.TutoShowcase;
 import java.util.List;
 
 import io.coldfish.lettv.model.TVShow;
+import io.coldfish.lettv.rest.RestClient;
+import io.coldfish.lettv.rest.TVShowsRepository;
 import io.coldfish.lettv.viewmodel.VMTVShows;
 
 public class TVShowDetailsActivity extends AppCompatActivity {
@@ -40,7 +42,8 @@ public class TVShowDetailsActivity extends AppCompatActivity {
 
         TVShow tv_show = getIntent().getExtras().getParcelable("tv_show");
 
-        final VMTVShows vmTVShows = ViewModelProviders.of(this).get(VMTVShows.class);
+        VMTVShows.Factory factory = new VMTVShows.Factory(new TVShowsRepository(RestClient.get()));
+        final VMTVShows vmTVShows = ViewModelProviders.of(this, factory).get(VMTVShows.class);
         vmTVShows.callServiceForSimilarTVShows(tv_show);
 
         vmTVShows.getSimilarShowsData().observe(this, new Observer<List<TVShow>>() {

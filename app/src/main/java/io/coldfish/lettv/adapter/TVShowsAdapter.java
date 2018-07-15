@@ -52,6 +52,11 @@ public class TVShowsAdapter extends RecyclerView.Adapter<TVShowsAdapter.TVShowHo
         this.clickListener = itemClickListener;
     }
 
+    public void setItems(List<TVShow> items) {
+        tvShowsList.clear();
+        tvShowsList.addAll(items);
+        notifyDataSetChanged();
+    }
 
     public interface ItemClickListener {
         void onClick(View view, int position);
